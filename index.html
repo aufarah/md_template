@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="marked/marked.min.js"></script>
+  <script src="sectioner.js"></script>
+  
+  <script>
+    function httpGetAsync(theUrl, parse, sectioner)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                parse(xmlHttp.responseText);
+                sectioner()
+        }
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.send(null);
+    }
+    function parse(text){
+      console.log(text)
+      document.body.innerHTML = marked.parse(text);
+    }
+    httpGetAsync('./ocp_chart.md',parse,sectioner)
+    
+  </script>
+  
+
+  <title>Marked in the browser</title>
+</head>
+<body>
+  <div id="content"></div>
+</body>
+</html>
